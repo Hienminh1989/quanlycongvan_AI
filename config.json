@@ -1,0 +1,128 @@
+{
+  "app": {
+    "name": "Hệ Thống Quản Lý Công Văn",
+    "version": "1.0.0",
+    "description": "Document Management System - Professional Edition",
+    "environment": "production"
+  },
+  "server": {
+    "backend": {
+      "host": "0.0.0.0",
+      "port": 5000,
+      "debug": false,
+      "timeout": 30
+    },
+    "frontend": {
+      "host": "127.0.0.1",
+      "port": 5500,
+      "protocol": "http"
+    }
+  },
+  "database": {
+    "type": "sqlite",
+    "path": "backend/database/documents.db",
+    "connection_timeout": 10,
+    "pool_size": 20,
+    "max_overflow": 40
+  },
+  "file_upload": {
+    "max_size_mb": 50,
+    "allowed_extensions": ["pdf", "doc", "docx", "txt"],
+    "upload_folder": "uploads",
+    "temp_folder": "uploads/temp"
+  },
+  "ui": {
+    "theme": "professional",
+    "primary_color": "#4f46e5",
+    "secondary_color": "#7c3aed",
+    "accent_color": "#10b981",
+    "animation_enabled": true,
+    "animation_speed": 300,
+    "sidebar_width": 420,
+    "border_radius": 12,
+    "font_family": "system-ui, -apple-system, sans-serif"
+  },
+  "search": {
+    "engine": "smart",
+    "max_results": 10,
+    "cache_enabled": true,
+    "cache_ttl": 3600,
+    "min_query_length": 2
+  },
+  "ai": {
+    "chat": {
+      "enabled": true,
+      "response_timeout": 15,
+      "max_history": 100,
+      "typing_speed_ms": 50
+    },
+    "models": {
+      "provider": "openai",
+      "model_name": "gpt-3.5-turbo",
+      "api_key": "${OPENAI_API_KEY}",
+      "temperature": 0.7,
+      "max_tokens": 1000
+    }
+  },
+  "performance": {
+    "cache_enabled": true,
+    "cache_ttl": 3600,
+    "lazy_loading": true,
+    "pagination_size": 20,
+    "image_optimization": true,
+    "minify_assets": true
+  },
+  "security": {
+    "cors_enabled": true,
+    "cors_origins": ["http://localhost:5500", "http://localhost:3000"],
+    "csrf_protection": true,
+    "rate_limiting": true,
+    "rate_limit_requests": 100,
+    "rate_limit_period": 60,
+    "session_timeout": 3600,
+    "secure_cookies": false,
+    "content_security_policy": true
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "file": "logs/app.log",
+    "max_file_size_mb": 10,
+    "backup_count": 5
+  },
+  "features": {
+    "document_upload": true,
+    "smart_search": true,
+    "ai_chat": true,
+    "statistics": true,
+    "file_download": true,
+    "batch_operations": true,
+    "advanced_filters": true,
+    "export_data": true
+  },
+  "integrations": {
+    "openai": {
+      "enabled": true,
+      "api_endpoint": "https://api.openai.com/v1"
+    },
+    "google_drive": {
+      "enabled": false
+    },
+    "aws_s3": {
+      "enabled": false
+    }
+  },
+  "notifications": {
+    "enabled": true,
+    "email_notifications": false,
+    "push_notifications": true,
+    "toast_duration_ms": 3000
+  },
+  "defaults": {
+    "language": "vi",
+    "timezone": "Asia/Ho_Chi_Minh",
+    "date_format": "DD/MM/YYYY",
+    "time_format": "HH:mm:ss",
+    "items_per_page": 20
+  }
+}

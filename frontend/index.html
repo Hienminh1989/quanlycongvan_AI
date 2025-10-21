@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Quản Lý Công Văn</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-top">
+                    <div class="logo">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                        <div>
+                            <h1>Hệ Thống Quản Lý Công Văn</h1>
+                            <p>Tìm kiếm thông minh - Lưu trữ an toàn</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="uploadBtn">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        Tải Văn Bản
+                    </button>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="search-input"
+                        placeholder="Tìm kiếm theo nội dung, số văn bản, người gửi..."
+                    >
+                    <button class="btn btn-search" id="searchBtn">Tìm Kiếm</button>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats">
+                    <div class="stat-card stat-blue">
+                        <div>
+                            <p>Tổng văn bản</p>
+                            <h3 id="totalDocs">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-purple">
+                        <div>
+                            <p>Công văn</p>
+                            <h3 id="docTypeCount">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-green">
+                        <div>
+                            <p>Quyết định</p>
+                            <h3 id="decisionCount">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-orange">
+                        <div>
+                            <p>Tháng này</p>
+                            <h3 id="thisMonthCount">0</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification -->
+            <div id="notification" class="notification"></div>
+
+            <!-- Search Results -->
+            <div id="searchResults" class="search-results"></div>
+
+            <!-- Documents List -->
+            <div class="documents-section">
+                <h2>Danh sách văn bản (<span id="docCount">0</span>)</h2>
+                <div id="documentsList" class="documents-list"></div>
+            </div>
+        </div>
+
+        <!-- AI Chat Sidebar -->
+        <div class="chat-sidebar">
+            <div class="chat-header">
+                <div class="chat-logo">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2>AI Trợ Lý Thông Minh</h2>
+                    <p>Tìm kiếm văn bản nhanh chóng</p>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages"></div>
+
+            <div class="chat-input-area">
+                <input
+                    type="text"
+                    id="chatInput"
+                    class="chat-input"
+                    placeholder="Hỏi AI về văn bản..."
+                >
+                <button class="btn btn-chat" id="sendChatBtn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+            <p class="chat-hint">💡 Gợi ý: "Tìm công văn về kế hoạch", "Thống kê văn bản"</p>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tải Lên Văn Bản</h2>
+                <button class="close-btn" id="closeUploadModal">&times;</button>
+            </div>
+            <form id="uploadForm" class="upload-form">
+                <div class="form-group">
+                    <label>Chọn file văn bản *</label>
+                    <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt" required>
+                    <small>PDF, Word, Text (.pdf, .doc, .docx, .txt)</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Tiêu đề</label>
+                    <input type="text" id="titleInput" placeholder="Nhập tiêu đề">
+                </div>
+
+                <div class="form-group">
+                    <label>Loại văn bản</label>
+                    <select id="docTypeInput">
+                        <option value="">-- Chọn --</option>
+                        <option value="Công văn">Công văn</option>
+                        <option value="Quyết định">Quyết định</option>
+                        <option value="Hợp đồng">Hợp đồng</option>
+                        <option value="Báo cáo">Báo cáo</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Số văn bản</label>
+                    <input type="text" id="docNumberInput" placeholder="VD: CV-2024-001">
+                </div>
+
+                <div class="form-group">
+                    <label>Cơ quan gửi</label>
+                    <input type="text" id="senderInput" placeholder="Nhập cơ quan gửi">
+                </div>
+
+                <div class="form-group">
+                    <label>File đính kèm</label>
+                    <input type="file" id="attachmentInput" multiple>
+                    <small>Có thể chọn nhiều file</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Tải Lên</button>
+                    <button type="button" class="btn btn-secondary" id="cancelUploadBtn">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Document Detail Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="detailTitle">Chi Tiết Văn Bản</h2>
+                <button class="close-btn" id="closeDetailModal">&times;</button>
+            </div>
+            <div id="detailContent" class="detail-content"></div>
+        </div>
+    </div>
+
+    <!-- Hidden file inputs -->
+    <input type="file" id="mainFileInput" style="display: none;">
+    <input type="file" id="attachmentFileInput" style="display: none;" multiple>
+
+    <script src="script.js"></script>
+</body>
+</html>
